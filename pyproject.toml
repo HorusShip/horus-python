@@ -32,6 +32,8 @@ dependencies = [
 [project.urls]
 Homepage = "https://horusship.com"
 Documentation = "https://horusship.com/api/v1/docs"
+Source = "https://github.com/HorusShip/horus-python"
+Issues = "https://github.com/HorusShip/horus-python/issues"
 
 [project.optional-dependencies]
 dev = [
@@ -50,7 +52,7 @@ path = "src/horus/_version.py"
 packages = ["src/horus"]
 
 [tool.hatch.build.targets.sdist]
-include = ["src/horus", "README.md", "CHANGELOG.md", "pyproject.toml"]
+include = ["src/horus", "README.md", "CHANGELOG.md", "pyproject.toml", "LICENSE"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

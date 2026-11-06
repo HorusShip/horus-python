@@ -1,0 +1,30 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+permissions: { contents: read }
+concurrency: { group: "ci-${{ github.ref }}", cancel-in-progress: true }
+jobs:
+  test:
+    name: python ${{ matrix.python }}
+    # 3.9 (EOL) builds are no longer published for the newest Ubuntu image.
+    runs-on: ${{ matrix.python == '3.9' && 'ubuntu-22.04' || 'ubuntu-latest' }}
+    strategy:
+      fail-fast: false
+      matrix: { python: ["3.9", "3.10", "3.11", "3.12", "3.13"] }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ matrix.python }}" }
+      - run: pip install -e . pytest pytest-asyncio respx
+      - run: pytest -q
+  checks:
+    name: mypy --strict + generated code up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+      - run: pip install -e ".[dev]"
+      - run: mypy --strict src tests
+      - run: python scripts/generate.py --check

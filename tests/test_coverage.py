@@ -20,7 +20,7 @@ from horus import AsyncHorus, Horus, SyncPage
 from horus.resources._index import OPERATIONS
 
 ROOT = Path(__file__).resolve().parent.parent
-SPEC = json.loads((ROOT.parent / "openapi" / "openapi.json").read_text(encoding="utf-8"))
+SPEC = json.loads((ROOT / "openapi" / "openapi.json").read_text(encoding="utf-8"))
 METHODS = ("get", "post", "put", "patch", "delete")
 
 SPEC_OPS: Dict[str, Tuple[str, str]] = {

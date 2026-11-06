@@ -1,6 +1,6 @@
 """Regenerate the SDK's typed code from the OpenAPI spec.
 
-    python scripts/generate.py                 # from ../openapi/openapi.json
+    python scripts/generate.py                 # from openapi/openapi.json
     python scripts/generate.py --spec URL|PATH  # another copy (e.g. the live one)
     python scripts/generate.py --check          # fail if the committed code is stale
 
@@ -33,7 +33,7 @@ from codegen.params import ParamTypes  # noqa: E402
 from codegen.resources import build_tree, operation_index, render_module, render_package_init  # noqa: E402
 from codegen.spec import Spec  # noqa: E402
 
-DEFAULT_SPEC = ROOT.parent / "openapi" / "openapi.json"
+DEFAULT_SPEC = ROOT / "openapi" / "openapi.json"
 GENERATED_DIRS = ("src/horus/types", "src/horus/resources")
 HAND_WRITTEN = {"src/horus/resources/_jobs.py", "src/horus/resources/_webhooks.py"}
 
