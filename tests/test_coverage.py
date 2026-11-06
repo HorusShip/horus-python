@@ -1,3 +1,4 @@
+import shutil
 """Every operation in the pinned spec is callable, on both clients, and hits the right route."""
 
 from __future__ import annotations
@@ -103,6 +104,7 @@ async def test_async_operation_hits_its_route(op_id: str, async_client: AsyncHor
     assert (request.method, request.url.path) == (method.upper(), _expected_path(path, positional))
 
 
+@pytest.mark.skipif(shutil.which("datamodel-codegen") is None, reason="code generator not installed (CI runs this in its own job)")
 def test_generated_code_is_up_to_date() -> None:
     proc = subprocess.run(
         [sys.executable, str(ROOT / "scripts" / "generate.py"), "--check"], capture_output=True, text=True
