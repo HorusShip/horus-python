@@ -1,9 +1,9 @@
 """Credentials: API keys, plain bearer tokens, and refreshable OAuth tokens (AUTH.md).
 
 * API key (``ak_…`` or legacy ``horus_pat_…``): sent as ``Authorization: Bearer``.
-* OAuth access token from Atlas: same header. With a refresh token and ``client_id``
+* OAuth access token from Horus: same header. With a refresh token and ``client_id``
   the SDK refreshes it shortly before ``expires_at`` and once after a ``401``
-  (e.g. ``invalid_access_token``), stores the rotated refresh token (Atlas rotates on every
+  (e.g. ``invalid_access_token``), stores the rotated refresh token (Horus rotates on every
   use, and a reused one ends the grant) and calls ``on_refresh`` so you can persist it.
 * The token endpoint is never hard-coded: pass ``token_endpoint``, or it is discovered
   from ``<iss>/.well-known/openid-configuration`` using the access token's ``iss`` claim.
@@ -33,7 +33,7 @@ class TokenRefreshError(HorusError):
 
 @dataclass
 class OAuthCredentials:
-    """An Atlas OAuth grant. Mutated in place when refreshed."""
+    """An Horus OAuth grant. Mutated in place when refreshed."""
 
     access_token: str
     refresh_token: Optional[str] = None

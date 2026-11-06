@@ -64,7 +64,7 @@ asyncio.run(main())
 from horus import Horus, OAuthCredentials
 
 def save(creds: OAuthCredentials) -> None:
-    keychain.store(creds.refresh_token)   # Atlas rotates refresh tokens on every use
+    keychain.store(creds.refresh_token)   # Horus rotates refresh tokens on every use
 
 client = Horus(oauth=OAuthCredentials(
     access_token=tokens["access_token"],

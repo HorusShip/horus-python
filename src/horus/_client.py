@@ -26,7 +26,7 @@ class Horus(SyncAPIClient, SyncResources):
             print(listing.id, listing.title)
 
     Args:
-      api_key: an Atlas API key (``ak_…``) or legacy ``horus_pat_…``. Defaults to ``$HORUS_API_KEY``.
+      api_key: a Horus API key (``ak_…``) or legacy ``horus_pat_…``. Defaults to ``$HORUS_API_KEY``.
       access_token: an OAuth access token (no automatic refresh).
       oauth: :class:`OAuthCredentials` with a refresh token (refreshed automatically).
       base_url: defaults to ``$HORUS_BASE_URL`` or ``https://horusship.com/api/v1``.

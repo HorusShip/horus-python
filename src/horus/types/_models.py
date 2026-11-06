@@ -246,6 +246,7 @@ class Dashboard(HorusModel):
     period: Literal["day", "wtd", "mtd", "ytd", "all"]
     range: Optional[DashboardRange]
     revenue: Optional[Money]
+    profit: Optional[Money]
     units_sold: int
     listings: int
     """
@@ -893,7 +894,7 @@ class LeadAssignedEvent(Event):
 
 
 class LeadAssignedEventData(HorusModel):
-    lead: WebhookLead
+    lead: Lead
 
 
 class LeadClaim(HorusModel):
@@ -954,6 +955,10 @@ class Listing(HorusModel):
     items: list[ListingBundleItem]
     order_id: Optional[str]
     delisted_at: Optional[str]
+    end_reason: Optional[str]
+    """
+    Why it was ended: source_out_of_stock, source_product_not_found, source_unavailable, source_price_too_high, vero, user… Null while live.
+    """
     created_at: str
     updated_at: str
 
@@ -1224,7 +1229,7 @@ class MessageReceivedEvent(Event):
 
 
 class MessageReceivedEventData(HorusModel):
-    message: WebhookMessage
+    message: Message
 
 
 class MessageSync(HorusModel):
@@ -2805,24 +2810,6 @@ class WebhookJob(HorusModel):
     finished_at: Optional[str]
 
 
-class WebhookLead(HorusModel):
-    object: Literal["lead"]
-    id: str
-    """
-    Lead assignment id.
-    """
-    lead_id: str
-    status: str
-    competitor_title: str
-    competitor_price: Optional[Money]
-    image_url: str
-    asin: Optional[str]
-    amazon_title: Optional[str]
-    amazon_price: Optional[Money]
-    match_score: Optional[float]
-    assigned_at: str
-
-
 class WebhookList(HorusModel):
     object: Literal["list"]
     data: list[Webhook]
@@ -2864,21 +2851,7 @@ class WebhookListing(HorusModel):
     created_at: str
     updated_at: str
     delisted_at: Optional[str]
-
-
-class WebhookMessage(HorusModel):
-    object: Literal["message"]
-    id: str
-    ebay_account_id: str
-    thread_id: Optional[str]
-    sender_type: Optional[str]
-    sender_name: Optional[str]
-    subject: str
-    body: str
-    ebay_item_id: Optional[str]
-    listing_id: Optional[str]
-    is_vero: bool
-    received_at: str
+    end_reason: Optional[str]
 
 
 class WebhookReplay(HorusModel):

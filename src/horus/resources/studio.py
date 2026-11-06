@@ -92,7 +92,7 @@ _STUDIO_BADGES_LIST = Operation(
 _STUDIO_SAMPLE_LISTINGS_LIST = Operation(
     id="studio.sampleListings.list",
     method="get",
-    path="/studio/sample-listings",
+    path="/studio/sample_listings",
     path_params=(),
     query_params=("limit",),
     body_params=(),
@@ -170,7 +170,7 @@ _STUDIO_TEMPLATES_PREVIEW = Operation(
 _STUDIO_TEMPLATES_SET_DEFAULT = Operation(
     id="studio.templates.setDefault",
     method="post",
-    path="/studio/templates/{id}/set-default",
+    path="/studio/templates/{id}/set_default",
     path_params=("id",),
     query_params=(),
     body_params=(),
@@ -294,7 +294,7 @@ class StudioSampleListingsResource(SyncAPIResource):
     ) -> StudioSampleListingList:
         """Recent listings to preview templates against (generic samples when there are none).
 
-        ``GET /studio/sample-listings`` (operation ``studio.sampleListings.list``).
+        ``GET /studio/sample_listings`` (operation ``studio.sampleListings.list``).
         Scopes: studio:read.
         """
         return self._client._call(
@@ -417,7 +417,7 @@ class StudioTemplatesResource(SyncAPIResource):
     ) -> StudioTemplate:
         """Make this the default template for new listings.
 
-        ``POST /studio/templates/{id}/set-default`` (operation ``studio.templates.setDefault``).
+        ``POST /studio/templates/{id}/set_default`` (operation ``studio.templates.setDefault``).
         Scopes: studio:write.
         """
         return self._client._call(
@@ -575,7 +575,7 @@ class AsyncStudioSampleListingsResource(AsyncAPIResource):
     ) -> StudioSampleListingList:
         """Recent listings to preview templates against (generic samples when there are none).
 
-        ``GET /studio/sample-listings`` (operation ``studio.sampleListings.list``).
+        ``GET /studio/sample_listings`` (operation ``studio.sampleListings.list``).
         Scopes: studio:read.
         """
         return await self._client._call(
@@ -698,7 +698,7 @@ class AsyncStudioTemplatesResource(AsyncAPIResource):
     ) -> StudioTemplate:
         """Make this the default template for new listings.
 
-        ``POST /studio/templates/{id}/set-default`` (operation ``studio.templates.setDefault``).
+        ``POST /studio/templates/{id}/set_default`` (operation ``studio.templates.setDefault``).
         Scopes: studio:write.
         """
         return await self._client._call(

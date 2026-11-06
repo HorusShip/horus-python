@@ -83,6 +83,8 @@ _SALES_LIST = Operation(
         "sold_after",
         "sold_before",
         "q",
+        "buyer_username",
+        "listing_id",
     ),
     body_params=(),
     has_body=False,
@@ -244,6 +246,8 @@ class SalesResource(SyncAPIResource):
         sold_after: Union[str, datetime.datetime, NotGiven] = NOT_GIVEN,
         sold_before: Union[str, datetime.datetime, NotGiven] = NOT_GIVEN,
         q: Union[str, NotGiven] = NOT_GIVEN,
+        buyer_username: Union[str, NotGiven] = NOT_GIVEN,
+        listing_id: Union[str, NotGiven] = NOT_GIVEN,
         options: Optional[RequestOptions] = None,
     ) -> SyncPage[Sale]:
         """List sales.
@@ -262,6 +266,9 @@ class SalesResource(SyncAPIResource):
           needs_manual_fulfillment: The Manual Fulfillment tab: PENDING sales whose source
             order was cancelled or whose checkout failed.
           q: Search SKU, product name, eBay order id or source order id.
+          buyer_username: Exact eBay buyer username (e.g. to find the sale behind a buyer
+            message).
+          listing_id: eBay listing (item) id of the sold listing.
         """
         return self._client._call_page(
             _SALES_LIST,
@@ -277,6 +284,8 @@ class SalesResource(SyncAPIResource):
                 "sold_after": sold_after,
                 "sold_before": sold_before,
                 "q": q,
+                "buyer_username": buyer_username,
+                "listing_id": listing_id,
             },
             options=options,
         )
@@ -472,6 +481,8 @@ class AsyncSalesResource(AsyncAPIResource):
         sold_after: Union[str, datetime.datetime, NotGiven] = NOT_GIVEN,
         sold_before: Union[str, datetime.datetime, NotGiven] = NOT_GIVEN,
         q: Union[str, NotGiven] = NOT_GIVEN,
+        buyer_username: Union[str, NotGiven] = NOT_GIVEN,
+        listing_id: Union[str, NotGiven] = NOT_GIVEN,
         options: Optional[RequestOptions] = None,
     ) -> AsyncPaginator[Sale]:
         """List sales.
@@ -490,6 +501,9 @@ class AsyncSalesResource(AsyncAPIResource):
           needs_manual_fulfillment: The Manual Fulfillment tab: PENDING sales whose source
             order was cancelled or whose checkout failed.
           q: Search SKU, product name, eBay order id or source order id.
+          buyer_username: Exact eBay buyer username (e.g. to find the sale behind a buyer
+            message).
+          listing_id: eBay listing (item) id of the sold listing.
         """
         return self._client._call_page(
             _SALES_LIST,
@@ -505,6 +519,8 @@ class AsyncSalesResource(AsyncAPIResource):
                 "sold_after": sold_after,
                 "sold_before": sold_before,
                 "q": q,
+                "buyer_username": buyer_username,
+                "listing_id": listing_id,
             },
             options=options,
         )

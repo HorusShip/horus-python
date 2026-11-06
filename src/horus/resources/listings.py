@@ -75,7 +75,7 @@ _LISTINGS_PRICING_PREVIEW = Operation(
 _LISTINGS_BULK_DELETE = Operation(
     id="listings.bulkDelete",
     method="post",
-    path="/listings/bulk-delete",
+    path="/listings/bulk_delete",
     path_params=(),
     query_params=(),
     body_params=("group_id",),
@@ -162,6 +162,8 @@ _LISTINGS_LIST = Operation(
         "ids",
         "created_after",
         "created_before",
+        "end_reason",
+        "out_of_stock",
     ),
     body_params=(),
     has_body=False,
@@ -315,7 +317,7 @@ class ListingsResource(SyncAPIResource):
     ) -> ListingBulkDelete:
         """Delete every listing in a group (each is ended on eBay first).
 
-        ``POST /listings/bulk-delete`` (operation ``listings.bulkDelete``).
+        ``POST /listings/bulk_delete`` (operation ``listings.bulkDelete``).
         Scopes: listings:write.
         """
         return self._client._call(
@@ -456,6 +458,8 @@ class ListingsResource(SyncAPIResource):
         ids: Union[str, NotGiven] = NOT_GIVEN,
         created_after: Union[str, datetime.datetime, NotGiven] = NOT_GIVEN,
         created_before: Union[str, datetime.datetime, NotGiven] = NOT_GIVEN,
+        end_reason: Union[str, NotGiven] = NOT_GIVEN,
+        out_of_stock: Union[Literal["true"], NotGiven] = NOT_GIVEN,
         options: Optional[RequestOptions] = None,
     ) -> SyncPage[Listing]:
         """List listings.
@@ -470,6 +474,8 @@ class ListingsResource(SyncAPIResource):
           search: Every word must match the title, description, source SKU, eBay SKU, listing
             id or order id.
           ids: Comma-separated listing ids (max 100) — poll a batch you just created.
+          end_reason: Only listings ended for this reason, e.g. `source_out_of_stock`.
+          out_of_stock: Shortcut for listings ended because the source went out of stock.
         """
         return self._client._call_page(
             _LISTINGS_LIST,
@@ -486,6 +492,8 @@ class ListingsResource(SyncAPIResource):
                 "ids": ids,
                 "created_after": created_after,
                 "created_before": created_before,
+                "end_reason": end_reason,
+                "out_of_stock": out_of_stock,
             },
             options=options,
         )
@@ -667,7 +675,7 @@ class AsyncListingsResource(AsyncAPIResource):
     ) -> ListingBulkDelete:
         """Delete every listing in a group (each is ended on eBay first).
 
-        ``POST /listings/bulk-delete`` (operation ``listings.bulkDelete``).
+        ``POST /listings/bulk_delete`` (operation ``listings.bulkDelete``).
         Scopes: listings:write.
         """
         return await self._client._call(
@@ -808,6 +816,8 @@ class AsyncListingsResource(AsyncAPIResource):
         ids: Union[str, NotGiven] = NOT_GIVEN,
         created_after: Union[str, datetime.datetime, NotGiven] = NOT_GIVEN,
         created_before: Union[str, datetime.datetime, NotGiven] = NOT_GIVEN,
+        end_reason: Union[str, NotGiven] = NOT_GIVEN,
+        out_of_stock: Union[Literal["true"], NotGiven] = NOT_GIVEN,
         options: Optional[RequestOptions] = None,
     ) -> AsyncPaginator[Listing]:
         """List listings.
@@ -822,6 +832,8 @@ class AsyncListingsResource(AsyncAPIResource):
           search: Every word must match the title, description, source SKU, eBay SKU, listing
             id or order id.
           ids: Comma-separated listing ids (max 100) — poll a batch you just created.
+          end_reason: Only listings ended for this reason, e.g. `source_out_of_stock`.
+          out_of_stock: Shortcut for listings ended because the source went out of stock.
         """
         return self._client._call_page(
             _LISTINGS_LIST,
@@ -838,6 +850,8 @@ class AsyncListingsResource(AsyncAPIResource):
                 "ids": ids,
                 "created_after": created_after,
                 "created_before": created_before,
+                "end_reason": end_reason,
+                "out_of_stock": out_of_stock,
             },
             options=options,
         )

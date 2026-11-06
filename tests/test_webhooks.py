@@ -14,7 +14,7 @@ SW_TS = 1614265330
 SW_PAYLOAD = '{"test": 2432232314}'
 SW_SIGNATURE = "v1,g0hM9SsE+OTPJTGt/tmIKtSyZlE3uFJELVlNIOLJ1OE="
 
-# Signed by the Horus backend (src/modules/webhooks/signing.ts `signedHeaders`) with two
+# Signed by the Horus API with two
 # secrets, as during a rotation: [SW_SECRET, "legacy-plain-secret"].
 HORUS_BODY = (
     '{"id":"evt_1","object":"event","type":"sale.shipped","created":"2026-11-07T12:00:00.000Z",'

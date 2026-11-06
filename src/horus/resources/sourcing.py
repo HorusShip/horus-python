@@ -125,7 +125,7 @@ _SOURCING_CANDIDATES_LIST = Operation(
 _SOURCING_CANDIDATES_MARK_LISTED = Operation(
     id="sourcing.candidates.markListed",
     method="post",
-    path="/sourcing/candidates/{id}/mark-listed",
+    path="/sourcing/candidates/{id}/mark_listed",
     path_params=("id",),
     query_params=(),
     body_params=(),
@@ -202,7 +202,7 @@ _SOURCING_FEED_CLAIM = Operation(
 _SOURCING_FEED_CLAIM_AND_LIST = Operation(
     id="sourcing.feed.claimAndList",
     method="post",
-    path="/sourcing/feed/{id}/claim-and-list",
+    path="/sourcing/feed/{id}/claim_and_list",
     path_params=("id",),
     query_params=(),
     body_params=("group_id", "ebay_account_ids", "source_account_ids", "advantage_pct", "studio_template_id"),
@@ -262,7 +262,7 @@ _SOURCING_QUEUE_GET = Operation(
 _SOURCING_REVERSE_SEARCHES_CREATE = Operation(
     id="sourcing.reverseSearches.create",
     method="post",
-    path="/sourcing/reverse-searches",
+    path="/sourcing/reverse_searches",
     path_params=(),
     query_params=(),
     body_params=("asin", "image_url"),
@@ -480,7 +480,7 @@ class SourcingCandidatesResource(SyncAPIResource):
     ) -> SourcingCandidate:
         """Mark a candidate as listed (list it with `listings.create`).
 
-        ``POST /sourcing/candidates/{id}/mark-listed`` (operation ``sourcing.candidates.markListed``).
+        ``POST /sourcing/candidates/{id}/mark_listed`` (operation ``sourcing.candidates.markListed``).
         Scopes: sourcing:write.
         """
         return self._client._call(
@@ -619,7 +619,7 @@ class SourcingFeedResource(SyncAPIResource):
         Same as `sourcing.feed.claim` then `listings.create` with the item's ASIN; the candidate
         is marked LISTED.
 
-        ``POST /sourcing/feed/{id}/claim-and-list`` (operation ``sourcing.feed.claimAndList``).
+        ``POST /sourcing/feed/{id}/claim_and_list`` (operation ``sourcing.feed.claimAndList``).
         Scopes: sourcing:write, listings:write.
         """
         return self._client._call(
@@ -727,11 +727,11 @@ class SourcingReverseSearchesResource(SyncAPIResource):
         idempotency_key: Optional[str] = None,
         options: Optional[RequestOptions] = None,
     ) -> ReverseSearch:
-        """Find eBay sellers of an Amazon product (reverse image search).
+        """Find eBay sellers of an Amazon product.
 
         Queued for Horus Desktop / the extension; sellers found become candidates.
 
-        ``POST /sourcing/reverse-searches`` (operation ``sourcing.reverseSearches.create``).
+        ``POST /sourcing/reverse_searches`` (operation ``sourcing.reverseSearches.create``).
         Scopes: sourcing:write.
         """
         return self._client._call(
@@ -1011,7 +1011,7 @@ class AsyncSourcingCandidatesResource(AsyncAPIResource):
     ) -> SourcingCandidate:
         """Mark a candidate as listed (list it with `listings.create`).
 
-        ``POST /sourcing/candidates/{id}/mark-listed`` (operation ``sourcing.candidates.markListed``).
+        ``POST /sourcing/candidates/{id}/mark_listed`` (operation ``sourcing.candidates.markListed``).
         Scopes: sourcing:write.
         """
         return await self._client._call(
@@ -1150,7 +1150,7 @@ class AsyncSourcingFeedResource(AsyncAPIResource):
         Same as `sourcing.feed.claim` then `listings.create` with the item's ASIN; the candidate
         is marked LISTED.
 
-        ``POST /sourcing/feed/{id}/claim-and-list`` (operation ``sourcing.feed.claimAndList``).
+        ``POST /sourcing/feed/{id}/claim_and_list`` (operation ``sourcing.feed.claimAndList``).
         Scopes: sourcing:write, listings:write.
         """
         return await self._client._call(
@@ -1258,11 +1258,11 @@ class AsyncSourcingReverseSearchesResource(AsyncAPIResource):
         idempotency_key: Optional[str] = None,
         options: Optional[RequestOptions] = None,
     ) -> ReverseSearch:
-        """Find eBay sellers of an Amazon product (reverse image search).
+        """Find eBay sellers of an Amazon product.
 
         Queued for Horus Desktop / the extension; sellers found become candidates.
 
-        ``POST /sourcing/reverse-searches`` (operation ``sourcing.reverseSearches.create``).
+        ``POST /sourcing/reverse_searches`` (operation ``sourcing.reverseSearches.create``).
         Scopes: sourcing:write.
         """
         return await self._client._call(
