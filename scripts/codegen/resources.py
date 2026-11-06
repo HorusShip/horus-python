@@ -180,7 +180,9 @@ class MethodRenderer:
         args = self._args()
         returns = self._returns()
         is_coroutine = self.is_async and self.op.page_item is None
-        head = f"    {'async ' if is_coroutine else ''}def {self.op.py_method}(\n" + "".join(f"        {a},\n" for a in args)
+        head = f"    {'async ' if is_coroutine else ''}def {self.op.py_method}(\n" + "".join(
+            f"        {a},\n" for a in args
+        )
         head += f"    ) -> {returns}:\n"
         return head + self._docstring() + self._body(is_coroutine)
 
@@ -223,7 +225,9 @@ class MethodRenderer:
         return '        """' + text.strip().replace("\\", "\\\\").replace('"""', "'''") + '\n        """\n'
 
     def _arg_docs(self) -> List[str]:
-        described = [p for p in [*self.op.path_params, *self._kw_params()] if p.description and p.description != "Resource id."]
+        described = [
+            p for p in [*self.op.path_params, *self._kw_params()] if p.description and p.description != "Resource id."
+        ]
         if not described:
             return []
         out = ["", "Args:"]
@@ -246,7 +250,11 @@ class MethodRenderer:
             kwargs.append("idempotency_key=idempotency_key")
         kwargs.append("options=options")
         prefix = "await " if is_coroutine else ""
-        lines = [f"        return {prefix}self._client.{call}(", f"            {op.const_name},", f"            {target},"]
+        lines = [
+            f"        return {prefix}self._client.{call}(",
+            f"            {op.const_name},",
+            f"            {target},",
+        ]
         lines += [f"            {k}," for k in kwargs]
         return "\n".join(lines) + "\n        )\n"
 

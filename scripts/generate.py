@@ -63,14 +63,18 @@ def render_all(spec: Spec, out: Path) -> None:
     (resources_dir / "__init__.py").write_text(render_package_init(roots), encoding="utf-8")
     (resources_dir / "_index.py").write_text(operation_index(ops), encoding="utf-8")
     (types_dir / "params.py").write_text(param_types.render_module(), encoding="utf-8")
-    _format(out, [types_dir / "params.py", *resources_dir.glob("*.py")])
+    _format(
+        out, [types_dir / "params.py", types_dir / "_events.py", types_dir / "__init__.py", *resources_dir.glob("*.py")]
+    )
 
 
 def _format(out: Path, files: list[Path]) -> None:
     ruff = Path(sys.executable).with_name("ruff")
     targets = [str(f) for f in files if str(f.relative_to(out)).replace("\\", "/") not in HAND_WRITTEN]
     config = str(ROOT / "pyproject.toml")
-    subprocess.run([str(ruff), "check", "--config", config, "--select", "I,F401", "--fix", "--quiet", *targets], check=False)
+    subprocess.run(
+        [str(ruff), "check", "--config", config, "--select", "I,F401", "--fix", "--quiet", *targets], check=False
+    )
     subprocess.run([str(ruff), "format", "--config", config, "--quiet", *targets], check=True)
 
 

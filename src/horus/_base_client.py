@@ -72,7 +72,9 @@ class BaseClient:
         """The OAuth credentials in use (updated in place on refresh), if any."""
         return self._auth.oauth
 
-    def _build_request(self, http: Union[httpx.Client, httpx.AsyncClient], prepared: PreparedRequest, options: Optional[RequestOptions]) -> httpx.Request:
+    def _build_request(
+        self, http: Union[httpx.Client, httpx.AsyncClient], prepared: PreparedRequest, options: Optional[RequestOptions]
+    ) -> httpx.Request:
         timeout = (options or {}).get("timeout", self.timeout)
         return http.build_request(
             prepared.method,
@@ -122,7 +124,9 @@ class BaseClient:
         try:
             return response.json()
         except ValueError as exc:
-            raise APIResponseValidationError(f"Expected JSON from {response.request.url}, got: {response.text[:200]!r}", response=response) from exc
+            raise APIResponseValidationError(
+                f"Expected JSON from {response.request.url}, got: {response.text[:200]!r}", response=response
+            ) from exc
 
     def _parse(self, cast_to: Type[M], response: httpx.Response) -> M:
         return parse_model(cast_to, self._json(response))
@@ -145,7 +149,8 @@ def _resolve_auth(api_key: Optional[str], access_token: Optional[str], oauth: Op
     token = api_key or access_token or os.environ.get("HORUS_API_KEY")
     if not token:
         raise HorusError(
-            "No credentials: pass api_key=... (or access_token= / oauth=) or set the HORUS_API_KEY environment variable."
+            "No credentials: pass api_key=... (or access_token= / oauth=) "
+            "or set the HORUS_API_KEY environment variable."
         )
     return Auth(token=token)
 
@@ -195,7 +200,9 @@ class SyncAPIClient(BaseClient):
         idempotency_key: Optional[str] = None,
         options: Optional[RequestOptions] = None,
     ) -> M:
-        prepared = prepare_request(op, path=path or {}, params=params or {}, idempotency_key=idempotency_key, options=options)
+        prepared = prepare_request(
+            op, path=path or {}, params=params or {}, idempotency_key=idempotency_key, options=options
+        )
         return self._parse(cast_to, self._send(prepared, options))
 
     def _call_page(
@@ -298,7 +305,9 @@ class AsyncAPIClient(BaseClient):
         idempotency_key: Optional[str] = None,
         options: Optional[RequestOptions] = None,
     ) -> M:
-        prepared = prepare_request(op, path=path or {}, params=params or {}, idempotency_key=idempotency_key, options=options)
+        prepared = prepare_request(
+            op, path=path or {}, params=params or {}, idempotency_key=idempotency_key, options=options
+        )
         return self._parse(cast_to, await self._send(prepared, options))
 
     def _call_page(
@@ -336,7 +345,9 @@ class AsyncAPIClient(BaseClient):
             await asyncio.sleep(delay)
             attempt += 1
 
-    async def _attempt(self, prepared: PreparedRequest, options: Optional[RequestOptions]) -> Union[httpx.Response, APIError]:
+    async def _attempt(
+        self, prepared: PreparedRequest, options: Optional[RequestOptions]
+    ) -> Union[httpx.Response, APIError]:
         if self._auth.needs_refresh():
             await self._refresh_token()
         request = self._build_request(self._http, prepared, options)
@@ -353,7 +364,9 @@ class AsyncAPIClient(BaseClient):
             creds = self._auth.oauth
             if creds is None:
                 return
-            endpoint = creds.token_endpoint or self._auth.apply_discovery(await self._http.get(self._auth.discovery_url()))
+            endpoint = creds.token_endpoint or self._auth.apply_discovery(
+                await self._http.get(self._auth.discovery_url())
+            )
             self._auth.apply_token_response(await self._http.post(endpoint, data=self._auth.refresh_form()))
 
     async def close(self) -> None:

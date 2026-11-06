@@ -151,7 +151,16 @@ class Spec:
             assert isinstance(p, dict)
             if p.get("in") != location:
                 continue
-            out.append(Param(str(p["name"]), py_ident(str(p["name"])), p.get("schema", {}), bool(p.get("required")), location, p.get("description")))
+            out.append(
+                Param(
+                    str(p["name"]),
+                    py_ident(str(p["name"])),
+                    p.get("schema", {}),
+                    bool(p.get("required")),
+                    location,
+                    p.get("description"),
+                )
+            )
         return out
 
     def _body(self, op: Schema) -> Tuple[Optional[Schema], Optional[str]]:
@@ -167,7 +176,9 @@ class Spec:
         props = schema.get("properties", {})
         required = set(schema.get("required", []) or [])
         assert isinstance(props, dict)
-        return [Param(name, py_ident(name), s, name in required, "body", s.get("description")) for name, s in props.items()]
+        return [
+            Param(name, py_ident(name), s, name in required, "body", s.get("description")) for name, s in props.items()
+        ]
 
     def _success(self, op: Schema) -> Tuple[str, Schema]:
         responses = op["responses"]

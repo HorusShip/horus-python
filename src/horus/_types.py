@@ -4,9 +4,8 @@ from __future__ import annotations
 
 from typing import Dict, Mapping, Union
 
-from typing_extensions import Literal, TypedDict, final
-
 import httpx
+from typing_extensions import Literal, TypedDict, final
 
 __all__ = ["NOT_GIVEN", "NotGiven", "RequestOptions", "Timeout", "Headers"]
 

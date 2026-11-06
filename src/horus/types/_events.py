@@ -4,7 +4,6 @@
 from typing import Dict, Type, Union
 
 from ._models import (
-    Event,
     AccountLoginFailedEvent,
     AccountRecoveredEvent,
     AccountSessionLostEvent,
@@ -13,6 +12,7 @@ from ._models import (
     DesktopOnlineEvent,
     EbayAccountReconnectedEvent,
     EbayAccountTokenExpiredEvent,
+    Event,
     JobFailedEvent,
     JobSucceededEvent,
     LeadAssignedEvent,
@@ -33,8 +33,8 @@ from ._models import (
     SaleCreatedEvent,
     SaleDeliveredEvent,
     SaleHeldEvent,
-    SalePurchaseFailedEvent,
     SalePurchasedEvent,
+    SalePurchaseFailedEvent,
     SaleRefundedEvent,
     SaleShippedEvent,
     SaleSourceCancelledEvent,
