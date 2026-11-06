@@ -33,7 +33,7 @@ def test_me(live: Horus) -> None:
 
 
 def test_event_types_cover_the_spec(live: Horus) -> None:
-    types = list(live.event_types.list())
+    types = live.event_types.list().data  # not paginated (no cursor param)
     assert types and all(isinstance(t, EventType) for t in types)
 
 

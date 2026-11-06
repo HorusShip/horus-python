@@ -191,7 +191,9 @@ class MethodRenderer:
         return sorted(params, key=lambda p: not p.required)
 
     def _args(self) -> List[str]:
-        args = ["self"] + [f"{p.py_name}: str" for p in self.op.path_params]
+        args = ["self"] + [
+            f"{p.py_name}: {self.module.annotation(p, self.hint + pascal(p.name))}" for p in self.op.path_params
+        ]
         kw = self._kw_params()
         args.append("*")
         for p in kw:

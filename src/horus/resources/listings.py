@@ -253,7 +253,7 @@ class ListingsPrescansResource(SyncAPIResource):
 
     def get(
         self,
-        platform: str,
+        platform: Literal["WALMART", "TARGET", "BESTBUY", "ALIEXPRESS"],
         source_item_id: str,
         *,
         options: Optional[RequestOptions] = None,
@@ -605,7 +605,7 @@ class AsyncListingsPrescansResource(AsyncAPIResource):
 
     async def get(
         self,
-        platform: str,
+        platform: Literal["WALMART", "TARGET", "BESTBUY", "ALIEXPRESS"],
         source_item_id: str,
         *,
         options: Optional[RequestOptions] = None,

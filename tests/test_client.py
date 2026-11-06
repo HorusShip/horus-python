@@ -59,8 +59,8 @@ def test_body_sends_only_given_fields_and_explicit_none(client: Horus, mock_api:
 
 
 def test_path_params_are_escaped(client: Horus, mock_api: respx.MockRouter) -> None:
-    route = mock_api.get(url__regex=r".*/listings/prescans/AMAZON/B0%2F1$").respond(json={"object": "prescan"})
-    client.listings.prescans.get("AMAZON", "B0/1")
+    route = mock_api.get(url__regex=r".*/listings/prescans/WALMART/B0%2F1$").respond(json={"object": "prescan"})
+    client.listings.prescans.get("WALMART", "B0/1")
     assert route.called
 
 
