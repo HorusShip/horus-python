@@ -2,8 +2,8 @@
 
 * API key (``ak_…`` or legacy ``horus_pat_…``): sent as ``Authorization: Bearer``.
 * OAuth access token from Atlas: same header. With a refresh token and ``client_id``
-  the SDK refreshes it shortly before ``expires_at`` and once after a
-  ``401 invalid_access_token``, stores the rotated refresh token (Atlas rotates on every
+  the SDK refreshes it shortly before ``expires_at`` and once after a ``401``
+  (e.g. ``invalid_access_token``), stores the rotated refresh token (Atlas rotates on every
   use, and a reused one ends the grant) and calls ``on_refresh`` so you can persist it.
 * The token endpoint is never hard-coded: pass ``token_endpoint``, or it is discovered
   from ``<iss>/.well-known/openid-configuration`` using the access token's ``iss`` claim.
@@ -145,8 +145,13 @@ class Auth:
         return self.oauth
 
 
+# 401s a refreshed token cannot fix. Anything else (``invalid_access_token`` per AUTH.md;
+# production currently answers ``invalid_credentials``) is worth one refresh.
+_NOT_FIXED_BY_REFRESH = frozenset({"account_not_linked", "missing_credentials", "device_revoked"})
+
+
 def is_expired_token_error(error: AuthenticationError) -> bool:
-    return error.code == "invalid_access_token"
+    return error.code not in _NOT_FIXED_BY_REFRESH
 
 
 def _json_field(response: httpx.Response, name: str) -> Optional[str]:

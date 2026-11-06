@@ -107,3 +107,13 @@ async def test_async_refresh(mock_api: respx.MockRouter) -> None:
     async with AsyncHorus(oauth=oauth, base_url=BASE_URL) as client:
         await client.me.get()
     assert route.calls.last.request.headers["authorization"] == "Bearer at_async"
+
+
+@pytest.mark.usefixtures("delays")
+def test_unfixable_401_does_not_refresh(mock_api: respx.MockRouter) -> None:
+    oauth = creds([], token_endpoint=TOKEN_URL)
+    token = mock_api.post(TOKEN_URL).mock(return_value=token_response("at_new"))
+    mock_api.get("/me").respond(401, json=error("authentication", "account_not_linked"))
+    with Horus(oauth=oauth, base_url=BASE_URL) as client, pytest.raises(AuthenticationError):
+        client.me.get()
+    assert not token.called
